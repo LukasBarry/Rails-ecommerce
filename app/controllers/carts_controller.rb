@@ -1,6 +1,10 @@
 class CartsController < ApplicationController
   def show
     @cart = Cart.find(params[:id])
+    unless current_user.id == @cart.user_id
+      flash[:notice] = "You don't have access to that order."
+      redirect_to root_path
+    end
   end
 
   def new
@@ -24,12 +28,13 @@ class CartsController < ApplicationController
 
   def destroy
     @cart = Cart.find(params[:id])
-    @cart.destroy
-    respond_to do |format|
+    @cart.destroy if @cart.id == session[:cart_id]
+      session[:cart_id] = nil
+      respond_to do |format|
       format.html {redirect_to products_path, notice: "Your Cart was removed."}
     end
   end
-  
+
   def update
     @cart = Cart.find(params[:id])
     respond_to do |format|

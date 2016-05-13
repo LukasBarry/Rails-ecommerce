@@ -1,0 +1,41 @@
+<h1>Items in Cart</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        Product
+      </th>
+      <th>
+        Quantity
+      </th>
+      <th>
+        Unit Price
+      </th>
+      <th>
+        Total Price
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cart.line_items.each do |item| %>
+    <tr>
+      <td>
+        <%= item.product.name %>
+      </td>
+      <td>
+        <%= item.quantity %>
+      </td>
+      <td>
+        <%= number_to_currency item.product.price %>
+      </td>
+      <td>
+        <%= number_to_currency item.total_price %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table><br />
+
+<h1>Order subtotal: <%= number_to_currency @cart.subtotal %></h1>
+<%= button_to "Empty Cart", @cart, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-small" %>

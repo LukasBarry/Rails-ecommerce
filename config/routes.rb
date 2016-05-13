@@ -6,4 +6,8 @@ Rails.application.routes.draw do
   resources :profiles, only: :show
 
   root 'products#index'
+
+  resources :line_items, only: [:destroy, :create]
+
+  resources :carts
 end
