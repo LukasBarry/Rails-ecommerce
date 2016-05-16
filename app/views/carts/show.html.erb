@@ -38,4 +38,14 @@
 </table><br />
 
 <h1>Order subtotal: <%= number_to_currency @cart.subtotal %></h1>
-<%= button_to "Empty Cart", @cart, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-small" %>
+
+<%= link_to "Continue Shopping", root_path, class: "btn btn-success" %>
+
+<%= button_to "Empty Cart", @cart, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %><br />
+
+<%= form_tag order_complete_path do %>
+
+<%= hidden_field_tag :cart_id, @cart.id %>
+
+<script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="<%= Rails.configuration.stripe[:publishable_key] %>" data-description="Order #<%= @cart.id %>" data-amount="<%= (@cart.subtotal.to_f.round(2) * 100) %>"></script>
+<% end %>
