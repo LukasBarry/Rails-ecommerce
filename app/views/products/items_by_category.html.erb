@@ -5,7 +5,9 @@
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-body">
-          <p><%= image_tag product.pic.url(:medium) %></p>
+          <% if product.pic_file_name != nil %>
+          <%= image_tag product.pic.url(:medium) %>
+          <% end %>
           <h4><%= number_to_currency product.price %></h4>
           <h4><%= product.name %></h4>
         </div>
