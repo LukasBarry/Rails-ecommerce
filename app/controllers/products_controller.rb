@@ -7,6 +7,17 @@ class ProductsController < ApplicationController
     @product = Product.new
   end
 
+  def items_by_category
+    @category = Category.find(params[:cat_id])
+    @products = Product.all
+    @products_by_cat = []
+    @products.each do |product|
+      if product.category.id == params[:cat_id].to_i
+        @products_by_cat.push(product)
+      end
+    end
+  end
+
   def create
     @product = Product.create(product_params)
       if @product.save
